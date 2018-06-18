@@ -30,14 +30,35 @@ class App extends Component {
       var counter = this.state.counter + 1;
 
       if(document.querySelector('input:checked')){
-        var selectItemPrices = this.state.selectItemPrices.concat(document.querySelector('input:checked').value);
-        
-        this.setState({
-          counter: counter,
-          question: selectQuestions[counter].question,
-          answer: selectQuestions[counter].answers,
-          selectItemPrices: selectItemPrices
-        });
+
+        if(selectQuestions[this.state.counter].type === "checkbox"){
+          var multiSelect = document.querySelectorAll('input:checked');
+          var multiSelectValues = [];
+
+          for(var i=0; i < multiSelect.length; i++) {
+            multiSelectValues.push(multiSelect[i].value);
+          }
+
+          var selectItemPrices = this.state.selectItemPrices.concat(multiSelectValues);
+
+          this.setState({
+            counter: counter,
+            question: selectQuestions[counter].question,
+            answer: selectQuestions[counter].answers,
+            selectItemPrices: selectItemPrices
+          });
+
+        } else {
+          var selectItemPrices = this.state.selectItemPrices.concat(document.querySelector('input:checked').value);
+          
+          this.setState({
+            counter: counter,
+            question: selectQuestions[counter].question,
+            answer: selectQuestions[counter].answers,
+            selectItemPrices: selectItemPrices
+          });
+        }
+
       } else {
         alert('Please choose one of them!');
       }
@@ -59,6 +80,7 @@ class App extends Component {
     }
 
     this.setState({
+      counter: this.state.counter + 1,
       total: temp
     }); 
 
@@ -82,9 +104,8 @@ class App extends Component {
 
   render() {
     
-    if(this.state.selectItemPrices.length === selectQuestions.length){
+    if(this.state.counter === selectQuestions.length){
       return(
-        
         <div className="resultDisplay">
           <Bill total={this.state.total}/>
         </div>
@@ -97,12 +118,16 @@ class App extends Component {
             total={selectQuestions.length} 
           />
   
-          <Question content={selectQuestions[this.state.counter].question} />
+          <Question 
+            content={selectQuestions[this.state.counter].question}
+            counter={this.state.counter}
+          />
   
           <ul className="selectOptions">
             {this.state.answer.map((options) => <SelectOption key={options.content} 
                                                               answerContent={options.content}
-                                                              answerPrice={options.price}/>)}
+                                                              answerPrice={options.price}
+                                                              counter={this.state.counter} />)}
           </ul>
   
           <div className="btn-grp">

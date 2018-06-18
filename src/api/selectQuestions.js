@@ -1,5 +1,6 @@
 var selectQuestions = [
     {
+        type: "radio",
         question: "What type of bread do you want?",
         answers: [
             {
@@ -21,6 +22,7 @@ var selectQuestions = [
         ]
     },
     {
+        type: "checkbox",
         question: "Which veggies do you want?",
         answers: [
             {
@@ -46,6 +48,7 @@ var selectQuestions = [
         ]
     },
     {
+        type: "radio",
         question: "Which of these cheese would you prefer?",
         answers: [
             {
@@ -63,6 +66,7 @@ var selectQuestions = [
         ]
     },
     {
+        type: "checkbox",
         question: "Which of these sauce would you prefer?",
         answers: [
             {
@@ -84,6 +88,7 @@ var selectQuestions = [
         ]
     },
     {
+        type: "radio",
         question: "Which of the following would you prefer?",
         answers: [
             {
